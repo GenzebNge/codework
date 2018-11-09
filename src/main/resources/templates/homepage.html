@@ -1,18 +1,11 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Code Work Academy Messaging App</title>
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light|Slabo+27px" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
-    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />-->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <!--<style>-->
-    <!--footer { margin-top: 290px; }-->
-    <!--</style>-->
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <th:block th:insert="base :: header"></th:block>
+
 </head>
 <body>
 
@@ -69,66 +62,28 @@
                 <th class="pr-3">Sent By</th>
                 <th class="pr-3">Date</th>
             </tr>
-            <tr >
-                <td class="pr-4">hiakldj aljfd aljdfs aldsjf</td>
-                <td class="pr-3">Ermias</td>
-                <td class="pr-3">2018-11-09</td>
+            <tr th:each="message:${messages}">
+                <td><span th:inline="text" class="pr-4">[[${message.content}]]</span></td>
+                <td><span th:inline="text" class="pr-4">[[${message.sender}]]</span></td>
+                <td><span th:inline="text" class="pr-4">[[${message.date}]]</span></td>
+                <td>
+                    <div sec:authorize="isAuthenticated()" class="nav-link text-warning" th:inline="text">
+                        <button><a th:href="@{/detail/{id}(id=${message.id})}"/>Details</button>
+                    </div>
 
+                    <div sec:authorize="hasAuthority('ADMIN')" class="nav-link text-warning" th:inline="text">
+                        <button><a th:href="@{/delete/{id}(id=${message.id})}"/>Delete</a> </button>
+                    </div>
 
-
-
+                </td>
             </tr>
-            <tr >
-                <td class="pr-4">Henok dabo bela</td>
-                <td class="pr-3">Henok B</td>
-                <td class="pr-3">2018-11-06</td>
 
-
-
-
-            </tr>
-            <tr >
-                <td class="pr-4">asdasdasdasdasd</td>
-                <td class="pr-3">username</td>
-                <td class="pr-3">2018-11-08</td>
-
-
-
-
-            </tr>
-            <tr >
-                <td class="pr-4">hi hello                        </td>
-                <td class="pr-3">a</td>
-                <td class="pr-3">2018-11-08</td>
-
-
-
-
-            </tr>
-            <tr >
-                <td class="pr-4">shdfhfjfgjhggh</td>
-                <td class="pr-3">mel</td>
-                <td class="pr-3">2018-11-12</td>
-
-
-
-
-            </tr>
-            <tr >
-                <td class="pr-4">dsdgsdgsdgdsxgd</td>
-                <td class="pr-3">fdfsd</td>
-                <td class="pr-3">2018-11-15</td>
-
-
-
-
-            </tr>
         </table>
         <br>
-        <!--<h5>You have to login to add message!</h5>-->
-        <!--<div sec:authorize="isAnonymous()">-->
-        <!--<button class="btn btn-primary"><a class="text-white" href="/login">Login</a></button>-->
-        <!--</div>-->
+        <h5>You have to login to add message!</h5>
+        <div sec:authorize="isAnonymous()">
+        <button class="btn btn-primary"><a class="text-white" href="/login">Login</a></button>
+        </div>
         <div>
             <!--<button class="btn btn-primary"><a class="text-white" href="/listMsg">Add Message</a></button>-->
             <button id="btn-color" class="btn btn-color"><a class="text-white"
@@ -144,14 +99,7 @@
 </div>
 
 <div class="emptySpace"></div>
-
-<footer class="navbar navbar navbar-expand-lg navbar-light bg-dark fixed-bottom">
-    <div class="text-muted" align="center">
-        <h6>&copy; 2018 Josemy Joseph</h6>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-</footer>
+<div class="emptySpace"></div>
+<div th:replace="base:: footer"></div>
 </body>
 </html>

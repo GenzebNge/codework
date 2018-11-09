@@ -16,6 +16,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    MessageRepository messageRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -35,5 +37,8 @@ public class DataLoader implements CommandLineRunner {
         user = new User("admin@admin.com", "password", "fname", "lname", true, "admin");
         user.setRoles(Arrays.asList(adminRole));
         userRepository.save(user);
+
+        Message message = new Message("The is the content of the message", "Admin","12-02-1018");
+        messageRepository.save(message);
     }
 }

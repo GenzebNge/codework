@@ -17,6 +17,15 @@ public class Message {
     @ManyToMany
     private Set<User> students;
 
+    public Message() {
+    }
+
+    public Message(String content, String sender, String date) {
+        this.setContent(content);
+        this.setSender(sender);
+        this.setDate(date);
+
+    }
 
     public long getId() {
         return id;

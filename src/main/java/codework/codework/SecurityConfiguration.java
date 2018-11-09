@@ -37,15 +37,15 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                 .antMatchers("/","/register").permitAll()
+                .antMatchers("/add").access("hasAuthority('USER')")
                 .anyRequest().authenticated()
-
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout()
                 .logoutRequestMatcher(
                         new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login").permitAll().permitAll()
+                .logoutSuccessUrl("/login").permitAll()
                 .and()
                 .httpBasic();
         http

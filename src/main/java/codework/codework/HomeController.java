@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 
 @Controller
@@ -16,16 +14,17 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    MessageRepository messageRepository;
+
     @RequestMapping("/")
-    public String homePage(){
+    public String homePage(Model model){
+        model.addAttribute("messages", messageRepository.findAll());
         return "homepage";
     }
 
 
-    @RequestMapping("/login")
-    public String login(){
-        return "loginform";
-    }
+
 
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
@@ -45,16 +44,43 @@ public class HomeController {
         return "redirect:/";
     }
 
-//    @RequestMapping("/message")
-//    public String login(){
-//        return "list";
-//    }
-//
-//    @RequestMapping("/process")
-//    public String processMessage(){
-//
-//        return "redirect:/";
-//
-//    }
+    @RequestMapping("/login")
+    public String login(){
+        return "loginform";
+    }
+
+
+    @RequestMapping("/addmessage")
+    public String addMessage(Model model){
+        model.addAttribute("model", new Message());
+        return "messageform";
+    }
+
+    @PostMapping("/processmessage")
+        public String processMessage(@Valid @ModelAttribute("message") Message message, BindingResult result){
+         if (result.hasErrors()){
+             return "messageform";
+         }
+        messageRepository.save(message);
+        return "redirect:/";
+    }
+
+    @RequestMapping("/detail/{id}")
+    public String showCourse(@PathVariable("id") long id, Model model){
+        model.addAttribute("message", messageRepository.findById(id).get());
+        return "show";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String updateCourse(@PathVariable("id") long id, Model model){
+        model.addAttribute("meassage", messageRepository.findById(id).get());
+        return "messageform";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delCourse(@PathVariable("id") long id){
+        messageRepository.deleteById(id);
+        return "redirect:/";
+    }
 
 }
