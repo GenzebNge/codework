@@ -3,13 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:insert="base :: header"></th:block>
 </head>
-<body>
-<a href="/">Show all Courses</a><br/>
-Content: <span th:text="${message.content}"></span><br/>
-Sende By: <span th:text="${message.sender}"></span><br/>
-Date: <span th:text="${message.date}"></span><br/>
 
-<a th:href="@{/delete/{id}(id=${message.id})}">Delete this message</a>
+<body>
+<div th:replace="base :: nav"></div>
+
+<div class="my-5"></div>
+<div class="container bg-light ">
+    <div class="my-4 "></div>
+    <h2 class="text-center py-3 pl-4 pr-5">Message Details</h2>
+    <div class="my-4" align="center">
+        <table>
+
+                <tr class="text-dark">
+                    <th class="pr-3">Content</th> &nbsp;&nbsp;
+                    <th class="pr-3">Sent By</th>&nbsp;&nbsp;
+                    <th class="pr-3">Date</th>
+                </tr>
+                <tr th:each="message:${messages}">
+                    <td><span th:inline="text" class="pr-4">[[${message.content}]]</span></td>
+                    <td><span th:inline="text" class="pr-4">[[${message.sender}]]</span></td>
+                    <td><span th:inline="text" class="pr-4">[[${message.date}]]</span></td>
+
+                    </tr>
+                        <div>
+                            <button><a th:href="/"/>view all messages</button>
+                            <button><a th:href="@{/update/{id}(id=${message.id})}"/>update post</a> </button>
+                        </div>
+
+        </table>
+    </div>
+</div>
+<!--<a href="/">Show all Courses</a><br/>-->
+<!--Content: <span th:text="${message.content}"></span><br/>-->
+<!--Sende By: <span th:text="${message.sender}"></span><br/>-->
+<!--Date: <span th:text="${message.date}"></span><br/>-->
+
+<!--<a th:href="@{/delete/{id}(id=${message.id})}">Delete this message</a>-->
+
+<div class="emptySpace"></div>
+<div th:replace="base:: footer"></div>
 </body>
 </html>
