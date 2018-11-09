@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Details of all</title>
     <th:block th:insert="base :: header"></th:block>
 </head>
 
@@ -14,33 +14,35 @@
     <div class="my-4 "></div>
     <h2 class="text-center py-3 pl-4 pr-5">Message Details</h2>
     <div class="my-4" align="center">
-        <table>
 
+        <table>
                 <tr class="text-dark">
                     <th class="pr-3">Content</th> &nbsp;&nbsp;
                     <th class="pr-3">Sent By</th>&nbsp;&nbsp;
                     <th class="pr-3">Date</th>
                 </tr>
-                <tr th:each="message:${messages}">
+
+                <tr>
                     <td><span th:inline="text" class="pr-4">[[${message.content}]]</span></td>
                     <td><span th:inline="text" class="pr-4">[[${message.sender}]]</span></td>
                     <td><span th:inline="text" class="pr-4">[[${message.date}]]</span></td>
 
-                    </tr>
-                        <div>
-                            <button><a th:href="/"/>view all messages</button>
-                            <button><a th:href="@{/update/{id}(id=${message.id})}"/>update post</a> </button>
-                        </div>
-
+                </tr>
         </table>
-    </div>
-</div>
-<!--<a href="/">Show all Courses</a><br/>-->
-<!--Content: <span th:text="${message.content}"></span><br/>-->
-<!--Sende By: <span th:text="${message.sender}"></span><br/>-->
-<!--Date: <span th:text="${message.date}"></span><br/>-->
+        <br>
 
-<!--<a th:href="@{/delete/{id}(id=${message.id})}">Delete this message</a>-->
+
+        <td>
+            <button class="btn btn-color"><a class="text-white" href="/">View All
+                Messages</a></button>
+            <button class="btn btn-color"><a class="text-white" th:href="@{/update/{id}(id=${message.id})}"> Update Post </a></button>
+
+        </td>
+
+
+
+</div>
+</div>
 
 <div class="emptySpace"></div>
 <div th:replace="base:: footer"></div>

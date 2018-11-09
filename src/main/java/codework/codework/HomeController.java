@@ -14,6 +14,8 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+@Autowired
+UserRepository userRepository;
     @Autowired
     MessageRepository messageRepository;
 
@@ -36,8 +38,8 @@ public class HomeController {
             return "registrationform";
         }
         else {
-            userService.saveUser(user);
-            model.addAttribute("message", "User account created");
+            userRepository.save(user);
+            model.addAttribute("user", "User account created");
         }
         return "redirect:/";
     }
@@ -47,14 +49,13 @@ public class HomeController {
         return "loginform";
     }
 
-
     @RequestMapping("/addmessage")
     public String addMessage(Model model){
-        model.addAttribute("model", new Message());
+        model.addAttribute("message", new Message());
         return "messageform";
     }
 
-    @PostMapping("/processmessage")
+    @PostMapping("/addmessage")
         public String processMessage(@Valid @ModelAttribute("message") Message message, BindingResult result){
          if (result.hasErrors()){
              return "messageform";
@@ -71,9 +72,10 @@ public class HomeController {
 
     @RequestMapping("/update/{id}")
     public String updateMessage(@PathVariable("id") long id, Model model){
-        model.addAttribute("meassage", messageRepository.findById(id).get());
+        model.addAttribute("message", messageRepository.findById(id).get());
         return "messageform";
     }
+
 
     @RequestMapping("/delete/{id}")
     public String deleteMessage(@PathVariable("id") long id){

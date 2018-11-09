@@ -15,7 +15,7 @@ public class Message {
     private String date;
 
     @ManyToMany
-    private Set<User> students;
+    private Set<User> users;
 
     public Message() {
     }
@@ -26,6 +26,9 @@ public class Message {
         this.setDate(date);
 
     }
+
+
+
 
     public long getId() {
         return id;
@@ -51,13 +54,7 @@ public class Message {
         this.sender = sender;
     }
 
-    //    public User getSender() {
-//        return sender;
-//    }
-//
-//    public void setSender(User sender) {
-//        this.sender = sender;
-//    }
+
 
     public String getDate() {
         return date;
@@ -67,11 +64,11 @@ public class Message {
         this.date = date;
     }
 
-    public Set<User> getStudents() {
-        return students;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setStudents(Set<User> students) {
-        this.students = students;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

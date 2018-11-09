@@ -23,15 +23,19 @@
 
 <div class="my-4" align="center">
     <table>
-        <!--<h2>Insecure Page</h2>-->
-        <!--<a href="/secure">Secure Page</a>-->
 
         <tr class="text-dark">
             <th class="pr-3">Content</th>
             <th class="pr-3">Sent By</th>
             <th class="pr-3">Date</th>
         </tr>
-        <tr th:each="message:${messages}">
+
+        <tr th:each="message : ${messages}">
+
+            <!--<td th:text="${message.content}"></td>-->
+            <!--<td th:text="${message.sender}"></td>-->
+            <!--<td th:text="${message.date}"></td>-->
+
             <td><span th:inline="text" class="pr-4">[[${message.content}]]</span></td>
             <td><span th:inline="text" class="pr-4">[[${message.sender}]]</span></td>
             <td><span th:inline="text" class="pr-4">[[${message.date}]]</span></td>
@@ -49,27 +53,42 @@
         </tr>
 
     </table>
+
     <br>
     <h5>Please login to add message!</h5>
 
+    <table>
+<tr>
 
     <td>
         <div sec:authorize="isAuthenticated()">
             <button class="btn btn-primary"><a class="text-white" href="/addmessage">Add Message</a></button>
         </div>
+    </td>
+    <td>
         <div sec:authorize="isAuthenticated()">
             <button class="btn btn-primary"><a class="text-white" href="/logout">Logout</a></button>
         </div>
         </td>
+</tr>
+    </table>
+
+    <table>
+
     <td>
         <div sec:authorize="!isAuthenticated()">
             <button class="btn btn-primary"><a class="text-white" href="/login">Login</a></button>
         </div>
+    </td>
+
+        <td>
         <div sec:authorize="!isAuthenticated()">
             <button class="btn btn-primary"><a class="text-white" href="/register">Register</a></button>
         </div>
 
     </td>
+    </tr>
+    </table>
 
 </div>
 

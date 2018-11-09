@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,16 +10,16 @@
 <nav th:replace="base :: nav"></nav>
 <br>
 <br>
-<form action="/process"
-      method="post">
 
-    <input type="hidden" id="id" name="id" value="0" />
+<form action="#" th:action="@{/addmessage}" th:object="${message}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <!--<input type="hidden" id="id" name="id" value=" " />-->
 
     <div class="form-group row">
         <label for="messageInput" class="col-sm-3 col-form-label">
             Enter your message: </label>
         <div class="col-sm-9">
-            <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
+
             <textarea class="form-control form-group col-sm-6"
                       id="messageInput" rows="3" cols="110"
                       placeholder="Type your message!" name="content"></textarea>
@@ -32,7 +32,7 @@
         </label>
         <div class="col-sm-4">
             <!--<input type="password" class="form-control" id="inputPassword3" placeholder="Password">-->
-            <input type="date" class="form-control" id="dateInput" name="datePosted" value="">
+            <input type="date" class="form-control" id="dateInput" name="date" value="">
             <br />
         </div>
     </div>
@@ -42,7 +42,7 @@
         </label>
         <div class="col-sm-4">
             <!--<input type="date" class="form-control" id="dateInput">-->
-            <input type="text" class="form-control" id="nameInput" name="setBy" value="">
+            <input type="text" th:field="*{sender}" class="form-control" id="nameInput" name="setBy" value="">
             <br/><br/>
         </div>
     </div>
