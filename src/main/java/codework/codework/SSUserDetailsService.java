@@ -6,8 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,32 +19,34 @@ public class SSUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try{
             User appUser = userRepository.findByUsername(username);
-            if (appUser == null){
-               // System.out.println("user not found with the provided username") + appUser.toString());
+
+            if(appUser == null){
+                System.out.println("User not found with the provided username" + appUser.toString());
                 return null;
             }
-            System.out.println("User from username" + appUser.toString());
 
-//            return new CustomUserDetails(appUser, getAuthorities(appUser));
-
+            System.out.println(" User from username " + appUser.toString());
             return new CustomUserDetails(appUser, getAuthorities(appUser));
-
-        } catch(Exception e){
+        }
+        catch (Exception e){
             throw new UsernameNotFoundException("User not found");
         }
     }
 
-    private Set<GrantedAuthority> getAuthorities(User appUser){
-        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        for (Role role : appUser.getRoles()){
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRole());
+    private Set<GrantedAuthority> getAuthorities(User appUser) {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        for(Role role : appUser.getRoles()){
+            GrantedAuthority grantedAuthority =
+                    new SimpleGrantedAuthority(role.getRole());
             authorities.add(grantedAuthority);
         }
-        //System.out.println("User auhtorities are" + authorities.toString());
+
+        System.out.println("User authorities are" + authorities.toString());
         return authorities;
     }
+
 }

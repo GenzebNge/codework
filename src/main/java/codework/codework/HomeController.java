@@ -24,8 +24,6 @@ public class HomeController {
     }
 
 
-
-
     @GetMapping("/register")
     public String showRegistrationPage(Model model){
         model.addAttribute("user", new User());
@@ -66,19 +64,19 @@ public class HomeController {
     }
 
     @RequestMapping("/detail/{id}")
-    public String showCourse(@PathVariable("id") long id, Model model){
+    public String showmessage(@PathVariable("id") long id, Model model){
         model.addAttribute("message", messageRepository.findById(id).get());
         return "show";
     }
 
     @RequestMapping("/update/{id}")
-    public String updateCourse(@PathVariable("id") long id, Model model){
+    public String updateMessage(@PathVariable("id") long id, Model model){
         model.addAttribute("meassage", messageRepository.findById(id).get());
         return "messageform";
     }
 
     @RequestMapping("/delete/{id}")
-    public String delCourse(@PathVariable("id") long id){
+    public String deleteMessage(@PathVariable("id") long id){
         messageRepository.deleteById(id);
         return "redirect:/";
     }

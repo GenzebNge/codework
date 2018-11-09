@@ -23,7 +23,11 @@ public class CustomUserDetails extends org.springframework.security.core.userdet
                              boolean credentialsNonExpired,
                              boolean accountNonLocked,
                              Collection<? extends  GrantedAuthority> authorities){
-        super(user.getUsername(), user.getPassword(),enabled, accountNonExpired,credentialsNonExpired,accountNonLocked, authorities);
+        super(user.getUsername(),
+                user.getPassword(),
+                enabled,
+                accountNonExpired,
+                credentialsNonExpired,accountNonLocked, authorities);
         this.user = user;
     }
     public User getUser(){

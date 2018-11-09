@@ -34,38 +34,27 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
 
-        http
-                .authorizeRequests()
-                .antMatchers("/","/register").permitAll()
-                .antMatchers("/add").access("hasAuthority('USER')")
-                .anyRequest().authenticated()
+        http.authorizeRequests()
+                .antMatchers("/", "/h2-console/**", "/register","/css/**", "/js/**","/jpg/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(
-                        new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login").permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll().permitAll()
                 .and()
                 .httpBasic();
-        http
-                .csrf().disable();
-        http
-                .headers().frameOptions().disable();
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
     }
 
     @Override
     protected  void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService(userDetailsServiceBean()).passwordEncoder(encoder
-                ());
+        auth.userDetailsService((userDetailsServiceBean()))
+                .passwordEncoder(encoder());
 
-//        auth.inMemoryAuthentication().withUser("dave")
-//
-//                .password(passwordEncoder().encode("begreat"))
-//                .authorities("ADMIN")
-//                .and()
-//                .withUser("username").password(passwordEncoder().encode("password"))
-//                .authorities("USER").and().passwordEncoder(passwordEncoder());
     }
 }
