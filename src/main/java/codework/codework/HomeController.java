@@ -22,6 +22,10 @@ UserRepository userRepository;
     @RequestMapping("/")
     public String homePage(Model model){
         model.addAttribute("messages", messageRepository.findAll());
+
+//        if(userService.getUser() != null) {
+//            model.addAttribute("user_id", userService.getUser().getId());
+//        }
         return "homepage";
     }
 
